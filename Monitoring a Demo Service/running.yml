@@ -1,0 +1,14 @@
+Run three instances of the demo service in the background, each on its own port:
+./prometheus_demo_service -listen-address=:10000 &
+./prometheus_demo_service -listen-address=:10001 &
+./prometheus_demo_service -listen-address=:10002 &
+
+
+Each of the instances now serves synthetic metrics about itself on
+http://<machine-ip>:<instance-port>/metrics. Explore the metrics of one instance a bit.
+The demo service generates four different types of simulated metrics:
+Metrics about an HTTP API server (request counts, durations, errors)
+CPU usage metrics
+Disk usage and total size metrics
+Metrics about a batch job that runs periodically and can fail with a certain probability.
+You will learn more about these metrics in detail when querying them.
