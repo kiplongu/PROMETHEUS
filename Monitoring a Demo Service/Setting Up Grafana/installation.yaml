@@ -1,0 +1,12 @@
+# Grafana can be deployed and configured in multiple ways, and can use different backends for storing
+# dashboard metadata. We will not discuss operational details of Grafana here, but you can find these in
+# the Grafana documentation. To keep things simple, you are going to run Grafana on Docker with
+# default configuration parameters.
+
+To run Grafana on Docker on port 3000, run:
+
+
+# docker run -d -p 3000:3000 --name grafana grafana/grafana:7.5.4
+
+# Head to http://<machine-ip>:3000/ and log in with the default username admin and the
+password admin:

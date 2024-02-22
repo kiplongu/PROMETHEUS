@@ -1,0 +1,11 @@
+# Creating a Prometheus Datasource
+# Before you can create a dashboard, you need to configure a data source in Grafana that knows how to
+# query Prometheus:
+
+# Click on Add your first data source in the Home view that is shown after logging in.
+# Choose “Prometheus” as a datasource type.
+# Fill out the data source fields:
+# ○ Enter Demo Prometheus into the Name field.
+# ○ Set the URL to http://<machine-ip>:9090.
+# ○ Leave the other fields at their defaults.
+# Click Save & test and verify that the data source was saved and tested successfully.

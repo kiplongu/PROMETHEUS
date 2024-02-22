@@ -1,0 +1,17 @@
+# Now we can create our first Grafana dashboard:
+
+# Click on the + (Create) icon in the left menu, which takes you to an empty new dashboard.
+# Click on Add an empty panel to add a new graph panel to the dashboard.
+# Set the time range (at the top right of the graph panel) to Last 1 hour.
+# Enter the following expression into the query expression field (with the placeholder text “Enter a
+# PromQL query”):
+
+sum without(instance, status)
+ (rate(demo_api_request_duration_seconds_count{job="demo"}[1m]))
+
+# This graphs the demo service HTTP request rate, aggregated over all instances and response
+# status codes.
+# Set the Legend field to {{path}}: {{method}} to display briefer legend strings that only contain the
+# label values that are actually relevant to the displayed result.
+# In the panel settings on the right, set the Panel Title field to Requests [rate-1m].
+# Click Save at the top to save the dashboard under the name Demo Service.
