@@ -1,0 +1,22 @@
+
+
+
+# Let's install the Node Exporter.
+
+In a new terminal, change to your home directory and download Node Exporter version 1.1.2 for Linux:
+
+# wget https://github.com/prometheus/node_exporter/releases/download/v1.1.2/node_exporter-1.1.2.linux-amd64.tar.gz
+
+Extract the archive:
+
+# tar xvfz node_exporter-1.1.2.linux-amd64.tar.gz
+
+Change into the extracted directory:
+
+# cd node_exporter-1.1.2.linux-amd64
+
+# The Node Exporter has a variety of collector modules that can be configured or turned off and on via
+# flags (see the Node Exporter's collector module documentation). However, by default it will start up
+# with a reasonable configuration without providing any flags.
+Start the Node Exporter:
+# ./node_exporter

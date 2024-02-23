@@ -6,7 +6,7 @@
 To run Grafana on Docker on port 3000, run:
 
 
-# docker run -d -p 3000:3000 --name grafana grafana/grafana:7.5.4
+ docker run -d -p 3000:3000 --name grafana grafana/grafana:7.5.4
 
 # Head to http://<machine-ip>:3000/ and log in with the default username admin and the
 password admin:
