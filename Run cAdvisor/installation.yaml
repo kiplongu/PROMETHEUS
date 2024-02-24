@@ -1,0 +1,15 @@
+Let's run cAdvisor. The easiest way to deploy it is using Docker. In a new terminal, run:
+docker run \
+--volume=/:/rootfs:ro \
+--volume=/var/run:/var/run:ro \
+--volume=/sys:/sys:ro \
+--volume=/var/lib/docker/:/var/lib/docker:ro \
+--volume=/dev/disk/:/dev/disk:ro \
+--publish=8080:8080 \
+--detach=true \
+--name=cadvisor \
+gcr.io/google-containers/cadvisor:v0.36.0
+
+# You should now be able to reach the cAdvisor metrics endpoint at
+
+http://<machine-ip>:8080/metrics.
