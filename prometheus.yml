@@ -34,3 +34,11 @@ scrape_configs:
     static_configs:
       - targets:
           - 'localhost:8000'
+
+  - job_name: 'consul-sd-demo'
+    consul_sd_configs:
+      - server: 'localhost:8500'
+    relabel_configs:
+      - action: keep
+        source_labels: [__meta_consul_service]
+        regex: demo
