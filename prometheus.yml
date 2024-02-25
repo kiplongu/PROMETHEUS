@@ -10,9 +10,9 @@ scrape_configs:
   - job_name: 'demo'
     static_configs:
       - targets:
-          - 'localhost:10000'
-          - 'localhost:10001'
-          - 'localhost:10002'
+        - 'localhost:10000'
+        - 'localhost:10001'
+        - 'localhost:10002'
     metric_relabel_configs:
       - action: keep
         source_labels: [__name__]
@@ -33,7 +33,7 @@ scrape_configs:
   - job_name: 'cpu-exporter'
     static_configs:
       - targets:
-          - 'localhost:8000'
+        - 'localhost:8000'
 
   - job_name: 'consul-sd-demo'
     consul_sd_configs:
@@ -42,3 +42,8 @@ scrape_configs:
       - action: keep
         source_labels: [__meta_consul_service]
         regex: demo
+
+  - job_name: 'file-sd-demo'
+    file_sd_configs:
+      - files:
+        - 'targets.yml'
