@@ -1,0 +1,12 @@
+# This configures the Blackbox Exporter to allow probing targets over HTTP. The module name
+# (http_2xx) can be freely chosen, but needs to match the value that Prometheus sends in the
+# module HTTP parameter during a scrape to the Blackbox Exporter. This is how Prometheus chooses
+# which type of probe to run through the exporter.
+
+modules:
+  http_2xx:
+    prober: http
+    timeout: 2s
+    http:
+      method: GET
+      preferred_ip_protocol: "ip4"
