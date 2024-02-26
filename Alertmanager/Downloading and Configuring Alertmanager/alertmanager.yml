@@ -1,7 +1,7 @@
 receivers:
 - name: test-receiver
   slack_configs:
-  - api_url: 'https://hooks.slack.com/services/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'
+  - api_url: ''
     username: 'Demo Alertmanager'
     channel: '#alertmanager'
     send_resolved: true

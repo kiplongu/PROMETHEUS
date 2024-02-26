@@ -58,3 +58,12 @@ received from Slack.
 This receiver configuration sends all notifications to the #alertmanager Slack channel as the user
 "Demo Alertmanager". Besides sending messages when alerts are firing, it will also notify you when a
 group of alerts have been marked as resolved.
+
+This example alerting rule instructs Prometheus to send alerts for any instance and path label
+combinations that have an error rate of more than 0.5% for more than 30 seconds. Note that this for
+duration is quite short, in order to quickly produce visible results. In real alerting rules, a more common
+value would be 5 minutes ("for: 5m"). This rule will also attach an extra severity="critical"
+label to any generated alerts. This extra label could be used to route alerts to a pager or other critical
+notification mechanism via the Alertmanager routing configuration. Finally, a human-readable
+description annotation is sent along with each alert, which you could choose to include in
+notification templates on the Alertmanager side.
