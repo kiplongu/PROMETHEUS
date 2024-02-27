@@ -4,8 +4,11 @@ global:
 
 alerting:
   alertmanagers:
-  - static_configs:
-    - targets: ['localhost:9093']
+    - static_configs:
+        - targets:
+          - 'localhost:9093'
+          - 'localhost:9094'
+
 
 rule_files:
 - alerting_rules.yml
