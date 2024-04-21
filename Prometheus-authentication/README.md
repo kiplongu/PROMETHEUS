@@ -237,3 +237,58 @@ curl -u prometheus:secret-password -k https://node01:9100/metrics
 
 
 Follow same steps for node02
+
+
+
+# Let's configure Prometheus server to use HTTPS for scraping the node_exporter. Find below more details:
+
+
+
+  (a) Copy the certificate from node_exporter to the prometheus server.
+
+
+  (b) Update prometheus config to use https for node_exporter
+
+
+  (c) Make sure to add insecure_skip_verify: true since we are using a self signed certificate
+
+
+  (d) Finally restart the prometheus service.
+
+
+# solution
+
+  Copy the certificate from node01 to Prometheus server
+
+
+scp root@node01:/etc/node_exporter/node_exporter.crt /etc/prometheus/node_exporter.crt
+
+
+
+Change certificate file ownership:
+
+
+chown prometheus.prometheus /etc/prometheus/node_exporter.crt
+
+
+
+Edit /etc/prometheus/prometheus.yml file
+
+
+vi /etc/prometheus/prometheus.yml
+
+
+
+Add below given lines under - job_name: "nodes"
+
+
+    scheme: https
+    tls_config:
+      ca_file: /etc/prometheus/node_exporter.crt
+      insecure_skip_verify: true
+
+
+
+Restart prometheus service
+
+systemctl restart prometheus
