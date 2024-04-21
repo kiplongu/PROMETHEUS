@@ -55,3 +55,91 @@ Reload the daemon and Restart node_exporter service
 systemctl daemon-reload
 systemctl restart node_exporter
 exit
+
+
+
+# Configure Prometheus and Node servers to use authentication to communicate. Find more details below:
+
+
+  (a) Username should be prometheus.
+
+
+  (b) Password should be secret-password, use the apache2-utils package to create a hash of the password.
+
+
+  (c) Configure node exporter's config file, i.e., config.yml to use the authentication
+
+
+  (d) Finally, restart node exporter service once done.
+
+
+
+Note: You should be able to SSH into node01 and node02 through user root (without any password) from prometheus-server. Once you SSH into any node (for example node01) and you are done with your changes, remember to exit from that node (i.e node01) before SSH into the another node (i.e node02).
+
+# solution
+
+SSH to node01:
+
+
+ssh root@node01
+
+
+
+Install apache2-utils package:
+
+
+apt update
+apt install apache2-utils -y
+
+
+
+Generate password hash:
+
+htpasswd -nBC 10 "" | tr -d ':\n'; echo
+
+
+
+It will ask for the password twice as below (enter password secret-password twice):
+
+
+New password:
+Re-type new password:
+
+
+
+Finally, you will get a hashed value of your password.
+
+
+Edit /etc/node_exporter/config.yml file:
+
+
+vi /etc/node_exporter/config.yml
+
+
+
+Add below lines in it:
+
+
+basic_auth_users:
+  prometheus: <hashed-password>
+
+
+
+Restart node_exporter service
+
+
+systemctl restart node_exporter
+exit
+
+
+
+You can verify the changes using curl command:
+
+curl http://node01:9100/metrics
+
+
+
+return output should be Unauthorized
+
+
+Note: Follow same steps for node02 except generating the password hash, you should be able to use the same password hash for node02.
