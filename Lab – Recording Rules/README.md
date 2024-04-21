@@ -61,3 +61,47 @@ Restart the prometheus service:
 
 
 systemctl restart prometheus
+
+
+# Update the node group you created earlier to add another rule to get the average rate of received packets across all interfaces on a node, as each node has 2 interfaces. Please find below more details:
+
+
+
+  (a) The record name should be node_network_receive_bytes_rate_avg.
+
+
+  (b) The expression should be:
+
+
+avg by(instance) (node_network_receive_bytes_rate)
+
+
+
+  (c) Restart the prometheus service.
+
+  # solution
+  Edit /etc/prometheus/node-rules.yaml file:
+
+
+vi /etc/prometheus/node-rules.yaml
+
+
+
+Add the required rule so that the file looks like below:
+
+
+groups:
+  - name: node
+    interval: 15s
+    rules:
+      - record: node_network_receive_bytes_rate
+        expr: rate(node_network_receive_bytes_total{job="nodes"}[2m])
+      - record: node_network_receive_bytes_rate_avg
+        expr: avg by(instance) (node_network_receive_bytes_rate)
+
+
+
+Restart the prometheus service:
+
+
+systemctl restart prometheus
