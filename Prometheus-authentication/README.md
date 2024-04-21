@@ -143,3 +143,29 @@ return output should be Unauthorized
 
 
 Note: Follow same steps for node02 except generating the password hash, you should be able to use the same password hash for node02.
+
+
+
+# Now, let's configure the Prometheus server to use authentication when scraping metrics from node servers.
+
+# solution
+Edit the Prometheus configuration file
+
+
+vi /etc/prometheus/prometheus.yml
+
+
+
+Under - job_name: "nodes" add below lines:
+
+
+basic_auth:
+  username: prometheus
+  password: secret-password
+
+
+
+Restart prometheus service:
+
+
+systemctl restart prometheus
