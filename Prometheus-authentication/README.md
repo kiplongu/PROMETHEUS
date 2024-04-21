@@ -169,3 +169,71 @@ Restart prometheus service:
 
 
 systemctl restart prometheus
+
+# Configure node exporter to use TLS on both nodes i.e node01 and node02. You can generate a certificate and key using the below command:
+
+openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout node_exporter.key -out node_exporter.crt -subj "/C=US/ST=California/L=Oakland/O=MyOrg/CN=localhost" -addext "subjectAltName = DNS:localhost"
+
+
+Note: You should be able to SSH into node01 and node02 through user root (without any password) from prometheus-server. Once you SSH into any node (for example node01) and you are done with your changes, remember to exit from that node (i.e node01) before SSH into the another node (i.e node02).
+
+# solution
+
+SSH to node01
+
+
+ssh root@node01
+
+Generate the certificate and key
+
+
+openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout node_exporter.key -out node_exporter.crt -subj "/C=US/ST=California/L=Oakland/O=MyOrg/CN=localhost" -addext "subjectAltName = DNS:localhost"
+
+
+
+Move the crt and key file under /etc/node_exporter/ directory
+
+mv node_exporter.crt node_exporter.key /etc/node_exporter/
+
+
+
+Change ownership:
+
+
+chown nodeusr.nodeusr /etc/node_exporter/node_exporter.key
+chown nodeusr.nodeusr /etc/node_exporter/node_exporter.crt
+
+
+
+Edit /etc/node_exporter/config.yml file:
+
+
+vi /etc/node_exporter/config.yml
+
+
+
+Add below lines in this file:
+
+
+tls_server_config:
+  cert_file: node_exporter.crt
+  key_file: node_exporter.key
+
+
+
+Restart node exporter service:
+
+
+systemctl restart node_exporter
+exit
+
+
+
+You can verify your changes using curl command:
+
+
+curl -u prometheus:secret-password -k https://node01:9100/metrics
+
+
+
+Follow same steps for node02
