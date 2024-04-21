@@ -105,3 +105,63 @@ Restart the prometheus service:
 
 
 systemctl restart prometheus
+
+
+
+
+# Create a new file called api-rules.yaml under /etc/prometheus/ directory. Update it to configure below rule(s).
+
+
+
+  (a) Add a group called api.
+
+
+  (b) Set the interval to 15s
+
+
+  (c) Add a rule that will track the average latency for past 2 minutes:
+
+
+        (i) The record name should be avg_latency_2m.
+
+
+        (ii) The expression should be rate(http_request_total_sum{job="api"}[2m]) /
+        rate(http_request_total_count{job="api"}[2m])
+
+
+  (d) Update the prometheus.yml file to include the new rules file i.e api-rules.yaml.
+
+
+  (e) Restart the Prometheus service.
+
+
+  We can avoid updating the prometheus.yml file every time for adding a new rule file we create by making use of globs. Update the prometheus.yml file so that it look like below:
+
+
+
+rule_files:
+  - "*rules.yaml"
+
+
+
+This will import all files that have prefix rules.yaml. Finally, restart theprometheus service.
+
+dit /etc/prometheus/prometheus.yml file:
+
+
+vi /etc/prometheus/prometheus.yml
+
+
+
+Change rule_files: section so that it looks like below:
+
+
+rule_files:
+  - "*rules.yaml"
+
+
+
+Restart the prometheus service:
+
+
+systemctl restart prometheus
